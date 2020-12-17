@@ -6,16 +6,11 @@
 /*   By: agirona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 12:15:37 by agirona           #+#    #+#             */
-/*   Updated: 2020/12/17 18:16:59 by agirona          ###   ########lyon.fr   */
+/*   Updated: 2020/12/17 18:56:57 by agirona          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-void	ft_putnbr(int n);
-void	ft_putchar(char c);
-void	ft_putstr(char *str);
-#include <malloc/malloc.h>
 
 int		ft_strlen(const char *str)
 {

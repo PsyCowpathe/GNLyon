@@ -6,51 +6,11 @@
 /*   By: agirona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 12:43:53 by agirona           #+#    #+#             */
-/*   Updated: 2020/12/17 18:47:52 by agirona          ###   ########lyon.fr   */
+/*   Updated: 2020/12/17 18:56:46 by agirona          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-#include <unistd.h>
-#include <fcntl.h>
-#include <malloc/malloc.h>
-
-void	ft_putchar(char c)
-{
-	write(1, &c, 1);
-}
-
-void	ft_putstr(char *str)
-{
-	int		i;
-
-	i = 0;
-	while (str[i])
-		ft_putchar(str[i++]);
-}
-
-void	ft_putnbr(int nb)
-{
-	if (nb == -2147483648)
-	{
-		ft_putchar('-');
-		ft_putnbr(214748364);
-		ft_putchar(8 + 48);
-	}
-	else if (nb < 0)
-	{
-		ft_putchar('-');
-		ft_putnbr(nb * -1);
-	}
-	else if (nb > 9)
-	{
-		ft_putnbr(nb / 10);
-		ft_putchar(nb % 10 + 48);
-	}
-	else
-		ft_putchar(nb + 48);
-}
 
 int		newline(char **str, char **save)
 {
@@ -120,47 +80,3 @@ int		get_next_line(int fd, char **line)
 		return (freevar(&buff, NULL, 1));
 	return (freevar(&save, &buff, ret));
 }
-
-/*int		ft_main(int argc, char	**argv)
-{
-	char	*res;
-	int		fd;
-	int		ret;
-	(void)argc;
-	(void)argv;
-
-	res = NULL;
-	ret = 1;
-	if (argc == 2)
-	{
-		fd = open(argv[1], O_RDONLY);
-		while (1)
-		{
-			ret = get_next_line(fd, &res);
-			if (ret == -1)
-			{
-				free(res);
-				ft_putstr("error");
-				return (0);
-			}
-			if (ret == 0)
-			{
-				free(res);
-				res = NULL;
-				return (1);
-			}
-			ft_putstr(res);
-			free(res);
-			res = NULL;
-		}
-	}
-	else
-		ft_putstr("usage ./a.out file");
-	free(res);
-	return (1);
-}
-
-int		main(int argc, char **argv)
-{
-	ft_main(argc, argv);
-}*/
