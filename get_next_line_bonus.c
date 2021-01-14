@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agirona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 12:43:53 by agirona           #+#    #+#             */
-/*   Updated: 2021/01/13 18:08:28 by agirona          ###   ########lyon.fr   */
+/*   Updated: 2021/01/13 18:08:35 by agirona          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int		newline(char **str, char **save)
 {
@@ -55,26 +55,26 @@ int		get_next_line(int fd, char **line)
 {
 	int				ret;
 	char			*buff;
-	static char		*save = NULL;
+	static char		*save[OPEN_MAX] = {NULL};
 
 	ret = -1;
 	*line = NULL;
 	if (fd < 0 || (buff = malloc(sizeof(char) * BUFFER_SIZE + 1)) == NULL)
-		return (freevar(&save, NULL, -1));
-	if (save && (line[0] = ft_strdup(save, 0)) == NULL)
-		return (freevar(&buff, &save, -1));
-	else if (save)
-		freevar(&save, NULL, 0);
-	while (ret != 0 && (ret = newline(line, &save)) == 0)
+		return (freevar(&save[fd], NULL, -1));
+	if (save[fd] && (line[0] = ft_strdup(save[fd], 0)) == NULL)
+		return (freevar(&buff, &save[fd], -1));
+	else if (save[fd])
+		freevar(&save[fd], NULL, 0);
+	while (ret != 0 && (ret = newline(line, &save[fd])) == 0)
 	{
 		ret = read(fd, buff, BUFFER_SIZE);
 		if (ret < 0)
-			return (freevar(&buff, &save, -1));
+			return (freevar(&buff, &save[fd], -1));
 		buff[ret] = '\0';
-		if ((line[0] = ft_strjoin(*line, buff)) == NULL)
+		if ((line[0] = ft_strjoin(line[0], buff)) == NULL)
 			return (-1);
 	}
-	if (save && ret != -1)
+	if (save[fd] && ret != -1)
 		return (freevar(&buff, NULL, 1));
-	return (freevar(&save, &buff, ret));
+	return (freevar(&save[fd], &buff, ret));
 }
